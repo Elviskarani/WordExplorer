@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Colors } from '../constants/Colors';
 import { Sizes } from '../constants/Sizes';
 import { QUESTIONS } from '../constants/GameData';
 import { storageService } from '../services/StorageService';
+import { hapticService } from '../services/HapticService';
 import Header from '../components/shared/Header';
 import WordCard from '../components/gameplay/WordCard';
 import AnswerOption from '../components/gameplay/AnswerOption';
@@ -45,6 +46,7 @@ export default function DailyWordScreen() {
         if (isCorrect) {
             await storageService.completeDailyWord();
             await storageService.updateTotalScore(100);
+            await hapticService.triggerSuccess();
 
             // Check for streak stickers
             const newStreak = await storageService.getDailyWordStreak();
@@ -62,6 +64,7 @@ export default function DailyWordScreen() {
                 );
             }, 1500);
         } else {
+            await hapticService.triggerError();
             setTimeout(() => {
                 Alert.alert(
                     '😔 Wrong Answer',
@@ -102,7 +105,11 @@ export default function DailyWordScreen() {
                         </TouchableOpacity>
                     </View>
                 ) : (
-                    <View style={styles.content}>
+                    <ScrollView
+                        style={styles.scrollView}
+                        contentContainerStyle={styles.scrollContent}
+                        showsVerticalScrollIndicator={false}
+                    >
                         <Text style={styles.title}>Word of the Day</Text>
                         <Text style={styles.subtitle}>Complete today's challenge!</Text>
 
@@ -127,7 +134,7 @@ export default function DailyWordScreen() {
                                 />
                             ))}
                         </View>
-                    </View>
+                    </ScrollView>
                 )}
             </View>
         </SafeAreaView>
@@ -158,8 +165,11 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         color: Colors.textPrimary,
     },
-    content: {
+    scrollView: {
         flex: 1,
+    },
+    scrollContent: {
+        paddingBottom: Sizes.xl,
     },
     title: {
         fontSize: Sizes.fontXXLarge,
@@ -177,6 +187,7 @@ const styles = StyleSheet.create({
     optionsContainer: {
         paddingHorizontal: Sizes.lg,
         marginTop: Sizes.md,
+        paddingBottom: Sizes.lg,
     },
     completedContainer: {
         flex: 1,

@@ -43,7 +43,7 @@ class StorageService {
             settings: {
                 music: true,
                 sounds: true,
-                haptics: false,
+                haptics: true,
             },
             dailyWord: {
                 date: '',

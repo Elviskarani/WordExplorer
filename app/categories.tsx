@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
@@ -9,9 +9,11 @@ import { CATEGORIES } from '../constants/GameData';
 import Header from '../components/shared/Header';
 import CategoryCard from '../components/categories/CategoryCard';
 import AnimatedCard from '../components/shared/AnimatedCard';
+import SettingsModal from '../components/shared/SettingsModal';
 
 export default function CategoriesScreen() {
     const router = useRouter();
+    const [showSettings, setShowSettings] = useState(false);
 
     const handleBackPress = () => {
         router.back();
@@ -30,7 +32,7 @@ export default function CategoriesScreen() {
     };
 
     const handleSettingsPress = () => {
-        router.push('../../shared/SettingsModal');
+        setShowSettings(true);
     };
 
     return (
@@ -88,6 +90,12 @@ export default function CategoriesScreen() {
                         <Text style={styles.navLabel}>Settings</Text>
                     </TouchableOpacity>
                 </View>
+
+                {/* Settings Modal */}
+                <SettingsModal
+                    visible={showSettings}
+                    onClose={() => setShowSettings(false)}
+                />
             </View>
         </SafeAreaView>
     );

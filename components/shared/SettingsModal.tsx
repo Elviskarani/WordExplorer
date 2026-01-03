@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../../constants/Colors';
 import { Sizes } from '../../constants/Sizes';
 import { storageService } from '../../services/StorageService';
+import { hapticService } from '../../services/HapticService';
 
 interface SettingsModalProps {
     visible: boolean;
@@ -27,6 +28,9 @@ export default function SettingsModal({ visible, onClose }: SettingsModalProps) 
     const handleHapticsToggle = async (value: boolean) => {
         setHaptics(value);
         await storageService.updateSettings({ haptics: value });
+        if (value) {
+            await hapticService.triggerSuccess();
+        }
     };
 
     return (

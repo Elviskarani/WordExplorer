@@ -10,6 +10,7 @@ interface HeaderProps {
     score?: number;
     onBackPress?: () => void;
     showBack?: boolean;
+    onSettingsPress?: () => void;
 }
 
 export default function Header({
@@ -18,6 +19,7 @@ export default function Header({
     score,
     onBackPress,
     showBack = false,
+    onSettingsPress,
 }: HeaderProps) {
     return (
         <View style={styles.container}>
@@ -44,6 +46,15 @@ export default function Header({
             </View>
 
             <View style={styles.rightSection}>
+                {onSettingsPress && (
+                    <TouchableOpacity
+                        style={styles.settingsButton}
+                        onPress={onSettingsPress}
+                        activeOpacity={0.8}
+                    >
+                        <Ionicons name="settings-outline" size={20} color={Colors.textPrimary} />
+                    </TouchableOpacity>
+                )}
                 {score !== undefined && (
                     <View style={styles.scoreContainer}>
                         <Ionicons name="star" size={16} color="#FFF" />
@@ -74,8 +85,19 @@ const styles = StyleSheet.create({
     rightSection: {
         width: 60,
         alignItems: 'flex-end',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        gap: Sizes.xs,
     },
     backButton: {
+        width: 40,
+        height: 40,
+        borderRadius: Sizes.radiusSmall,
+        backgroundColor: Colors.background,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    settingsButton: {
         width: 40,
         height: 40,
         borderRadius: Sizes.radiusSmall,
