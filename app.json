@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "WordExplorer",
+    "slug": "WordExplorer",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/owlimage.png",
+    "scheme": "WordExplorer",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/images/owlimage.png",
+        "backgroundImage": "./assets/images/owlimage.png",
+        "monochromeImage": "./assets/images/owlimage.png"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/owlimage.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/owlimage.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff",
+          "dark": {
+            "backgroundColor": "#000000"
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
